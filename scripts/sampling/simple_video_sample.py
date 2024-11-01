@@ -25,7 +25,7 @@ def sample(
     input_path: str = "assets/test_image.png",  # Can either be image file or folder with image files
     num_frames: Optional[int] = None,  # 21 for SV3D
     num_steps: Optional[int] = None,
-    version: str = "svd",
+    version: str = "svd_xt_1_1",
     fps_id: int = 6,
     motion_bucket_id: int = 127,
     cond_aug: float = 0.02,
@@ -53,6 +53,11 @@ def sample(
         num_steps = default(num_steps, 30)
         output_folder = default(output_folder, "outputs/simple_video_sample/svd_xt/")
         model_config = "scripts/sampling/configs/svd_xt.yaml"
+    elif version == "svd_xt_1_1":
+        num_frames = default(num_frames, 25)
+        num_steps = default(num_steps, 30)
+        output_folder = default(output_folder, "outputs/simple_video_sample/svd_xt_1_1/")
+        model_config = "scripts/sampling/configs/svd_xt_1_1.yaml"
     elif version == "svd_image_decoder":
         num_frames = default(num_frames, 14)
         num_steps = default(num_steps, 25)
@@ -94,7 +99,7 @@ def sample(
         azimuths_rad[:-1].sort()
     else:
         raise ValueError(f"Version {version} does not exist.")
-
+    print(model_config)
     model, filter = load_model(
         model_config,
         device,
